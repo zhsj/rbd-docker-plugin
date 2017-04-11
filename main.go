@@ -12,7 +12,9 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"os/user"
 	"path/filepath"
+	"strconv"
 	"syscall"
 
 	dkvolume "github.com/docker/go-plugins-helpers/volume"
@@ -117,8 +119,13 @@ func main() {
 		}
 	}()
 
-	// NOTE: pass empty string for group to skip broken chgrp in dkvolume lib
-	err = h.ServeUnix("", socket)
+	dockerGroup, err := user.LookupGroup("docker")
+	if err != nil {
+		log.Println("Can't find docker group")
+	}
+
+	dockerGid, _ := strconv.Atoi(dockerGroup.Gid)
+	err = h.ServeUnix(socket, dockerGid)
 
 	if err != nil {
 		log.Printf("ERROR: Unable to create UNIX socket: %v", err)
