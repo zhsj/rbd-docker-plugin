@@ -548,6 +548,12 @@ func (d cephRBDVolumeDriver) Unmount(r dkvolume.Request) dkvolume.Response {
 	return dkvolume.Response{}
 }
 
+func (d cephRBDVolumeDriver) Capabilities(r dkvolume.Request) dkvolume.Response {
+	var res dkvolume.Response
+	res.Capabilities = dkvolume.Capability{Scope: "global"}
+	return res
+}
+
 // END Docker VolumeDriver Plugin API methods
 // ***************************************************************************
 
