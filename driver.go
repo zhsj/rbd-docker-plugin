@@ -292,7 +292,7 @@ func (d cephRBDVolumeDriver) Remove(r dkvolume.Request) dkvolume.Response {
 //    Respond with the path on the host filesystem where the volume has been
 //    made available, and/or a string error if an error occurred.
 //
-func (d cephRBDVolumeDriver) Mount(r dkvolume.Request) dkvolume.Response {
+func (d cephRBDVolumeDriver) Mount(r dkvolume.MountRequest) dkvolume.Response {
 	log.Printf("INFO: Mount(%s)", r.Name)
 	d.m.Lock()
 	defer d.m.Unlock()
@@ -483,7 +483,7 @@ func (d cephRBDVolumeDriver) Path(r dkvolume.Request) dkvolume.Response {
 //    { "Err": null }
 //    Respond with a string error if an error occurred.
 //
-func (d cephRBDVolumeDriver) Unmount(r dkvolume.Request) dkvolume.Response {
+func (d cephRBDVolumeDriver) Unmount(r dkvolume.UnmountRequest) dkvolume.Response {
 	log.Printf("INFO: Unmount(%s)", r.Name)
 	d.m.Lock()
 	defer d.m.Unlock()
